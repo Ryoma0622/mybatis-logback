@@ -12,10 +12,10 @@ import ch.qos.logback.classic.Level;
 public class MyBatisExceptionFilter extends Filter<ILoggingEvent> {
     @Override
     public FilterReply decide(ILoggingEvent event) {
-        if (event.getLevel() == Level.ERROR && event.getThrowableProxy() != null && event.getThrowableProxy().getClassName() != null && event.getThrowableProxy().getClassName().equals("org.apache.ibatis.exceptions.PersistenceException")) {
-            System.out.println(event.getThrowableProxy().getClassName());
-            return FilterReply.DENY;
-        };
+//        if (event.getLevel() == Level.ERROR && event.getThrowableProxy() != null && event.getThrowableProxy().getClassName() != null && event.getThrowableProxy().getClassName().equals("org.apache.ibatis.exceptions.PersistenceException")) {
+//            System.out.println(event.getThrowableProxy().getClassName());
+//            return FilterReply.DENY;
+//        };
         return FilterReply.ACCEPT;
     }
 }

@@ -1,10 +1,13 @@
 <configuration>
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <filter class="jodoi.mybatislogback.MyBatisExceptionFilter" />
-        <encoder>
-            <pattern>
-                %-4relative [%thread] %-5level %logger{30} -%kvp -%msg%n
-            </pattern>
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <charset>UTF-8</charset>
+            <layout class="jodoi.mybatislogback.MyBatisPatternLayout">
+                <pattern>
+                    %-4relative [%thread] %-5level %logger{30} -%kvp -%msg%n
+                </pattern>
+            </layout>
         </encoder>
     </appender>
     <root>

@@ -16,7 +16,7 @@ public class App {
         MySqlSessionFactory mySqlSessionFactory = new MySqlSessionFactory();
         SqlSessionFactory sqlSessionFactory = mySqlSessionFactory.build();
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-//            sqlSession.selectOne("jodoi.mybatislogback.mapper.UserMapper.insert");
+            sqlSession.selectOne("jodoi.mybatislogback.mapper.UserMapper.insert");
             sqlSession.insert("jodoi.mybatislogback.mapper.UserMapper.failedInsert", "thisisakey");
             List<String> name = sqlSession.selectList("jodoi.mybatislogback.mapper.UserMapper.select");
             name.forEach(n -> System.out.println("Hello world! " + n));
