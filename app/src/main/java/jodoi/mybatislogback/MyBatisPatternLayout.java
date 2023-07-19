@@ -2,6 +2,8 @@ package jodoi.mybatislogback;
 
 import ch.qos.logback.classic.PatternLayout;
 import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.classic.spi.IThrowableProxy;
+import ch.qos.logback.classic.spi.ThrowableProxy;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -9,7 +11,7 @@ import java.util.regex.Pattern;
 public class MyBatisPatternLayout extends PatternLayout {
     @Override
     public String doLayout(ILoggingEvent event) {
-        if (event.getThrowableProxy() != null && event.getThrowableProxy().getClassName() != null && event.getThrowableProxy().getClassName().equals("org.apache.ibatis.exceptions.PersistenceException")) {
+        if (!isPersistenceExceptionIncluded(event)) {
             String message = super.doLayout(event);
 
             // org.apache.ibatis.exceptions.PersistenceException:
@@ -27,5 +29,19 @@ public class MyBatisPatternLayout extends PatternLayout {
         };
 
         return super.doLayout(event);
+    }
+
+    private boolean isPersistenceExceptionIncluded(ILoggingEvent event) {
+        // Check whether the event has PersistenceException as a cause by checking recursively
+        boolean result = false;
+        IThrowableProxy throwableProxy = event.getThrowableProxy();
+        while (throwableProxy != null) {
+            if (throwableProxy.getClassName().equals("org.apache.ibatis.exceptions.PersistenceException")) {
+                result = true;
+                break;
+            }
+            throwableProxy = throwableProxy.getCause();
+        }
+        return result;
     }
 }

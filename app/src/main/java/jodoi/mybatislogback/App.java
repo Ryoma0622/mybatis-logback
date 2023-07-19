@@ -23,8 +23,10 @@ public class App {
         } catch (Exception e) {
 //            log.error("e.getMessage(): " + e.getMessage());
 //            log.error("e.getCause().getMessage(): " + e.getCause().getMessage());
+            log.error("ERROR: Pass Throwable as a second argument", new RuntimeException("RuntimeException", new Exception("hogehogehoge", e)));
+            log.debug("----------------------------------------------------");
             log.error("ERROR: Pass Throwable as a second argument", e);
-            log.warn("WARN: Pass Throwable as a second argument", e);
+//            log.warn("WARN: Pass Throwable as a second argument", e);
         }
     }
 }
